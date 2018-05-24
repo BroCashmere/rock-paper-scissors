@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Rock Paper Scissors Game
+  </title>
+</head>
+
+<body>
+
+  <div id="game">
+    Please enter r, p, or s to start the game!
+  </div>
+
+  <script type="text/javascript">
+
+    let winCount = 0;
+    let lossesCount = 0;
+    let tiesCount = 0;
+
+    // Creates an array that lists out all of the options (Rock, Paper, or Scissors).
+    let computerChoices = ["r", "p", "s"];
+
+    // This function is run whenever the user presses a key.
+    document.onkeyup = function(event) {
+
+      // Determines which key was pressed.
+      let userGuess = event.key;
+
+      // Randomly chooses a choice from the options array. This is the Computer's guess.
+      let computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+      // call renderGame function to refresh the new game state
+      renderGame(userGuess, computerGuess);
+
+    };
+
+    // takes care of managing the entire game state
+    function renderGame(userGuess, computerGuess) {
+      if (!(userGuess === 'r' || userGuess === 'p' || userGuess === 's')) {
+        return;
+      }
+
+      if (userGuess === computerGuess) {
+        tiesCount++;
+      } else if (userGuess === 'r' && computerGuess === 'p') {
+        lossesCount++;
+      } else if (userGuess === 'r' && computerGuess === 's') {
+        winCount++;
+      } else if (userGuess === 'p' && computerGuess === 'r') {
+        winCount++;
+      } else if (userGuess === 'p' && computerGuess === 's') {
+        lossesCount++;
+      } else if (userGuess === 's' && computerGuess === 'p') {
+        winCount++;
+      } else if (userGuess === 's' && computerGuess === 'r') {
+        lossesCount++;
+      }
+
+      let game = document.getElementById('game');
+
+      game.innerHTML = `
+        <div>You chose: ${userGuess}</div><br>
+        <div>The computer chose: ${computerGuess}</div><br>
+        <div>wins: ${winCount}</div><br>
+        <div>losses: ${lossesCount}</div><br>
+        <div>ties: ${tiesCount}</div><br>
+      `
+    }
+
+  </script>
+
+</body>
+
+</html>
